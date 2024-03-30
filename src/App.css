@@ -16,6 +16,38 @@ background: linear-gradient(60deg, rgba(157,108,215,1) 0%, rgba(0,212,255,1) 100
   font-size: calc(10px + 2vmin);
   color: white;
 }
+.mainContainer{
+  padding:2rem;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+.counterText{
+  display: flex;
+  flex-direction: column;
+  width: 25rem;
+  align-items: center;
+}
+
+.counterText > input{
+  height: 2rem;
+  color: #fff;
+  border-radius: 0.3rem;
+  background: transparent;
+  border: 1px solid #fff;
+  margin-bottom: 3rem;
+  width: 17rem;
+}
+
+.counterText > button{
+  height: 2rem;
+  color: #fff;
+  border-radius: 0.3rem;
+  background: transparent;
+  border: 1px solid #fff;
+  margin-bottom: 3rem;
+  width: 9rem;
+}
 
 .allCardsDiv{
   display: flex;

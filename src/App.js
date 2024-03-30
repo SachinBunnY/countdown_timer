@@ -8,47 +8,81 @@ function App() {
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const [calenderDate, setCalenderDate] = useState(0);
+  const [intervalID, setIntervalID] = useState(null);
+  const [notification, setNotification] = useState("");
 
-  function calculateRemainingDays(selectedDate, para) {
-    const currentDate = new Date();
-    const parsedSelectedDate = new Date(selectedDate);
-    const differenceMs = parsedSelectedDate - currentDate;
+  function handleStartTimer() {
+    if (calenderDate.length > 0) {
+      setNotification("");
+      const selectedDate = new Date(calenderDate);
+      const currentTime = new Date();
+      const differenceMs = selectedDate - currentTime;
+      const isIt100Days = 100 * 24 * 60 * 60 * 1000;
+      if (differenceMs > isIt100Days) {
+        setNotification("Selected time is more than 100 days.");
+        return;
+      }
+      const id = setInterval(() => {
+        const currentTime = new Date();
+        const differenceMs = selectedDate - currentTime;
+        let remainingSeconds = Math.ceil((differenceMs / 1000) % 60);
+        let remainingMinutes = Math.ceil((differenceMs / (1000 * 60)) % 60);
+        let remainingHours = Math.ceil((differenceMs / (1000 * 60 * 60)) % 24);
+        let remainingDays = Math.ceil(differenceMs / (1000 * 60 * 60 * 24));
 
-    let remainingDays = Math.ceil(differenceMs / (1000 * 60 * 60 * 24));
-    const remainingSecs = Math.ceil(differenceMs / (1000 * 60 * 60));
-    if (para === "secs") {
-      return remainingSecs;
+        if (selectedDate.toDateString() === currentTime.toDateString()) {
+          setDays(0);
+          setHours(0);
+        } else {
+          setDays(remainingDays);
+          setHours(remainingHours);
+        }
+
+        setMinutes(remainingMinutes);
+        setSeconds(remainingSeconds);
+
+        if (differenceMs <= 0) {
+          setNotification(
+            "The countdown is over! What's next on your adventure?"
+          );
+          clearInterval(intervalID);
+        }
+      }, 1000);
+      setIntervalID(id);
     }
-    remainingDays = remainingDays.toString().replace(/^0+/, "");
-    return remainingDays;
   }
 
-  useEffect(() => {
-    if (calenderDate.length > 0) {
-      let date = calenderDate.split("T")[0];
-      setDays(calculateRemainingDays(date, "date"));
-      setSeconds(calculateRemainingDays(date, "secs"));
-      let hourAndMins = calenderDate.split("T")[1];
-      setHours(hourAndMins.split(":")[0].toString().replace(/^0+/, ""));
-      setMinutes(hourAndMins.split(":")[1]);
-    }
-  }, [calenderDate]);
+  function handleCancelTimer() {
+    clearInterval(intervalID);
+    setIntervalID(null);
+    setNotification("");
+  }
 
   return (
     <div className="App">
-      <div className="counterText">
-        <h4>Countdown Timer</h4>
-        <input
-          type="datetime-local"
-          onChange={(e) => setCalenderDate(e.target.value)}
-        ></input>
-        <button>Start Timer</button>
-      </div>
-      <div className="allCardsDiv">
-        <Count numbers={days} text={"Days"} />
-        <Count numbers={hours} text={"Hours"} />
-        <Count numbers={minutes} text={"Minutes"} />
-        <Count numbers={seconds} text={"Seconds"} />
+      <div className="mainContainer">
+        <div className="counterText">
+          <h4>Countdown Timer</h4>
+          <input
+            type="datetime-local"
+            onChange={(e) => setCalenderDate(e.target.value)}
+          ></input>
+          {intervalID == null ? (
+            <button onClick={() => handleStartTimer()}>Start Timer</button>
+          ) : (
+            <button onClick={() => handleCancelTimer()}>Cancel Timer</button>
+          )}
+        </div>
+        {notification === "" ? (
+          <div className="allCardsDiv">
+            <Count numbers={days} text={"Days"} />
+            <Count numbers={hours} text={"Hours"} />
+            <Count numbers={minutes} text={"Minutes"} />
+            <Count numbers={seconds} text={"Seconds"} />
+          </div>
+        ) : (
+          <p>{notification}</p>
+        )}
       </div>
     </div>
   );
