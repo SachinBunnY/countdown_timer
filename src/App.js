@@ -62,7 +62,9 @@ function App() {
     <div className="App">
       <div className="mainContainer">
         <div className="counterText">
-          <h4>Countdown Timer</h4>
+          <h4 className="title">
+            Countdown <span>Timer</span>
+          </h4>
           <input
             type="datetime-local"
             onChange={(e) => setCalenderDate(e.target.value)}

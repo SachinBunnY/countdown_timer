@@ -22,6 +22,27 @@ background: linear-gradient(60deg, rgba(157,108,215,1) 0%, rgba(0,212,255,1) 100
   display: flex;
   flex-direction: column;
 }
+
+.title, .title>span{
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fff;
+}
+.title>span{
+  color: #d500c5 !important;
+}
+.textNums{
+  margin-top: 1rem;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #d2d2d2;
+}
+.textChar{
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #bebaba;
+}
+
 .counterText{
   display: flex;
   flex-direction: column;
@@ -35,8 +56,9 @@ background: linear-gradient(60deg, rgba(157,108,215,1) 0%, rgba(0,212,255,1) 100
   border-radius: 0.3rem;
   background: transparent;
   border: 1px solid #fff;
-  margin-bottom: 3rem;
+  margin-bottom: 1.5rem;
   width: 17rem;
+  cursor: pointer;
 }
 
 .counterText > button{
@@ -47,12 +69,14 @@ background: linear-gradient(60deg, rgba(157,108,215,1) 0%, rgba(0,212,255,1) 100
   border: 1px solid #fff;
   margin-bottom: 3rem;
   width: 9rem;
+  cursor: pointer;
 }
 
 .allCardsDiv{
   display: flex;
   flex-direction: row;
-  width: 100%;
+  width: 60%;
+  flex-wrap: wrap;
   justify-content: space-evenly;
 }
 
@@ -60,7 +84,10 @@ background: linear-gradient(60deg, rgba(157,108,215,1) 0%, rgba(0,212,255,1) 100
 .cardDiv{
   width: 8rem;
   height: 8rem;
+  display: flex;
+  flex-direction: column;
   border-radius: 0.8rem;
+  margin: 1rem 1rem 0rem 0rem;
   background: rgb(157,108,215);
   background: linear-gradient(30deg, rgba(157,108,215,1) 10%, rgba(0,212,255,1) 100%);
   box-shadow: 5px 5px 30px 5px rgba(0,0,0,0.25), 
